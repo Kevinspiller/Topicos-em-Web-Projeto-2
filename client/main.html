@@ -1,0 +1,259 @@
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Nightcall Movies</title>
+
+<!-- Google fonts -->
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+
+<!-- font awesome -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- bootstrap -->
+<!-- Última versão CSS compilada e minificada -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- animate.css -->
+<link rel="stylesheet" href="assets/animate/animate.css" />
+<link rel="stylesheet" href="assets/animate/set.css" />
+
+<!-- gallery -->
+<link rel="stylesheet" href="assets/gallery/blueimp-gallery.min.css">
+
+<!-- favicon -->
+<link rel="shortcut icon" href="images/icone.ico" type="image/x-icon">
+<link rel="icon" href="images/icone.ico" type="image/x-icon">
+
+<link rel="stylesheet" href="assets/style.css">
+	
+</head>   
+    
+<body>
+  <div class="topbar animated fadeInLeftBig"></div>
+<!--Modal para acessibilidade-->
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Navegação pelo teclado</h4>
+            </div>
+            <div class="modal-body">
+                <p>Alt + H = Home</p>
+                <p>Alt + S = Sobre</p>
+                <p>Alt + A / Esc = Fechar</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<script>
+ jQuery(document).keypress(function(e) {
+  if (e.keyCode == 27) {
+   jQuery("#basicModal").modal('hide');
+  }
+ });
+</script>
+<!--Final do modal-->
+	
+    {{> header}}
+    {{> filmes}}
+    {{> sobre}}
+	{{> janela_cadastro}}
+    {{> info}}
+	{{> contato}}
+    {{> footer}}
+  
+</body>
+
+<!-- Header Starts -->
+<template name="header">
+<div class="navbar-wrapper">
+      <div class="container">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation" id="top-nav">
+          <div class="container">
+            <div class="navbar-header">
+              <!-- Logo Starts -->
+              <a class="navbar-brand" href="#works"><img src="images/logo.png" alt="logo"></a>
+              <!-- #Logo Ends -->
+
+
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+            </div>
+
+            <!-- Nav Starts -->
+              
+            <a accesskey="A" data-toggle="modal" data-target="#basicModal"></a>
+              
+            <div class="navbar-collapse  collapse">
+              <ul class="nav navbar-nav navbar-right scroll">
+                  <li ><a acesskey="L"><span class="fa fa-lock"></span>{{> loginButtons}}</a></li>
+                  <li class="active"><a href="#works" accesskey="H"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                 <li ><a href="#about" accesskey="S"><span class="glyphicon glyphicon-question-sign"></span> Sobre</a></li>
+				  <li ><a href="#cadastro" accesskey="C"><span class="fa fa-film"></span> Adicionar filme</a></li>
+                 <li ><a href="#contact" accesskey="X"><span class="glyphicon glyphicon-envelope"></span> Contato</a></li>
+              </ul>
+            </div>
+              
+            <div align="right">
+              <p>Tecle Alt + A para informações de acessibilidade</p>
+              </div>
+            <!-- #Nav Ends -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <nav>
+</nav>
+</template>
+
+<!--Cadastro filme inicia-->
+<template name="janela_cadastro">
+<div id="cadastro" class="container spacer about text-center">
+    <h2 class="text-center wowload fadeInUp">Inserir filme</h2> 
+        <form id="form_cadastro" method="post" class="form-horizontal">
+            <div class="form-group">
+                <label for="url" class="col-xs-3 control-label">URL Imagem</label>
+                <div class="col-xs-5">
+                    <input type="url" class="form-control" placeholder="Capa do filme" id="id_url" required/>
+                </div>
+            </div>
+			
+			<div class="form-group">
+                <label for="title" class="col-xs-3 control-label">Título</label>
+                <div class="col-xs-5">
+                    <input type="text" class="form-control" placeholder="Título" id="id_genre" required/>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="genre" class="col-xs-3 control-label">Gênero</label>
+                <div class="col-xs-5">
+                    <input type="text" class="form-control" placeholder="Gênero" id="id_title" required/>
+                </div>
+            </div>
+           
+            <div class="form-group">
+                <div class="col-xs-5 col-xs-offset-3">
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </div>
+            </div>
+        </form>
+</div>
+</template>
+<!--Cadastro filme termina-->
+
+<!-- Filmes inicio -->
+<template name="filmes">
+<div id="works"  class=" clearfix grid"> 
+    {{#each filmes_colecao}}
+    <figure class="effect-oscar  wowload fadeIn">
+        <img src={{src}} alt="img01">
+        <figcaption>
+            <p>{{genre}}<br>
+            <a class="btn btn-info" role="button">Comprar</a></p><br>
+			<p align="center">{{> starsRating mutable=true id="avalia_imagem" image_id=_id rating=stars}}</p>
+        </figcaption>
+         </figure>
+    {{/each}}    
+    </div>
+</template>
+    
+    
+<!--Filmes fim-->
+
+<!--Contact Starts-->
+<template name="contato">
+<section>
+    <div id="contact" class="spacer">
+        <div class="container contactform center">
+            <h2 class="text-center  wowload fadeInUp">Possui uma dúvida ou sugestão? Entre em contato conosco!</h2>
+         <form id="signupForm" method="post">
+            <div class="row wowload fadeInLeftBig"> 
+                <div class="col-sm-6 col-sm-offset-3 col-xs-12">      
+                    <input type="text" class="form-control" name="username" placeholder="Nome" required>
+                    <input type="email" class="form-control" name="useremail" placeholder="Email" required>
+                    <textarea rows="5" class="form-control" name="usermessage" placeholder="Mensagem" required></textarea>
+                    <!--button type="submit" class="btn btn-primary">Enviar</button-->
+                    <button type="submit" class="btn btn-primary" name="signup" value="Sign up">Enviar</button>
+                </div>
+            </div>
+          </form>
+        </div>
+    </div>
+</section>
+</template>
+<!--Contact Ends-->
+
+<template name="sobre">    
+<!--Sobre Inicio -->
+<div id="about"  class="container spacer about">
+<h2 class="text-center wowload fadeInUp">Sobre</h2>  
+  <div class="row">
+  <div class="col-sm-6 wowload fadeInLeft">
+    <h4><i class="fa fa-paint-brush"></i> Quem Somos</h4>
+    <p>Criada em meados 2015, a Nightcall Movies veio para agregar valor e trazer ótima qualidade em seus filmes online de compra. Notando que filmes digitais estão cada vez mais em alta com a grande ascensão da poderosa Netflix, foi criada com o propósito de trazer a você cliente a chance de comprar online seus filmes favoritos e assisti-los em qualquer lugar e qualquer hora em alta qualidade.</p>
+    
+
+  </div>
+  <div class="col-sm-6 wowload fadeInRight">
+  <h4><i class="fa fa-code"></i> Meta</h4>
+  <p>A Nightcall Movies presa por produtos de alta qualidade com preço acessível aos seus clientes, buscando sempre trazer a qualidade ao lado da variedade de protudos disponíveis em seu site. Levando como prioridade a satisfação do cliente, seja no produto, atendimento, variedade, como outros fatores.</p>    
+  </div>
+  </div>
+
+  <div class="process">
+  <ul class="row text-center list-inline  wowload bounceInUp">
+    </ul>
+  </div>
+</div>
+</template>
+<!--Sobre final-->
+
+<template name="info">    
+<!--Info inicio -->
+<div class="highlight-info">
+<div class="overlay spacer">
+<div class="container">
+<div class="row text-center  wowload fadeInDownBig">
+  <div class="col-sm-3 col-xs-6">
+  <i class="fa fa-smile-o  fa-5x"></i><h4>150 Clientes</h4>
+  </div>
+  <div class="col-sm-3 col-xs-6">
+  <i class="fa fa-rocket  fa-5x"></i><h4>12 Gêneros</h4>
+  </div>
+  <div class="col-sm-3 col-xs-6">
+  <i class="fa fa-film  fa-5x"></i><h4>36 Filmes</h4>
+  </div>
+  <div class="col-sm-3 col-xs-6">
+  <i class="fa fa-group fa-5x"></i><h4>10 Funcionários</h4>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<!--Info final -->
+</template>
+
+<!-- Footer Starts -->
+<template name="footer">
+<div class="footer text-center spacer">
+<p class="wowload flipInX"><a href="#"><i class="fa fa-facebook fa-2x"></i></a> <a href="#"><i class="fa fa-instagram fa-2x"></i></a> <a href="#"><i class="fa fa-twitter fa-2x"></i></a> <a href="#"><i class="fa fa-flickr fa-2x"></i></a> </p>
+Copyright 2017 Nightcall Movies. Todos os direitos reservados.
+</div>
+<a href="#works" class="gototop "><i class="fa fa-angle-up  fa-3x"></i></a>   
+</template> 
+<!-- # Footer Ends --> 
